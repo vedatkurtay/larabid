@@ -2,8 +2,8 @@
     <div v-if="flashSuccess" class="alert">
         {{ flashSuccess }}
     </div>
-    <Link href="/">Index</Link>&nbsp;
-    <Link href="/show">Show Page</Link>
+    <Link href="/listing">Index</Link>&nbsp;
+    <Link href="/listing/create">Listing Page</Link>
     <slot></slot>
 </template>
 

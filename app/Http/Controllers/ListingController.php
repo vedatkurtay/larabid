@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateListingRequest;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,7 @@ class ListingController extends Controller
      */
     public function create()
     {
-       //
+       return inertia('Listing/Create');
     }
 
     /**
@@ -35,9 +36,10 @@ class ListingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateListingRequest $request)
     {
-        //
+        Listing::create($request->validated());
+        return to_route('listing.index')->with('success', 'Listing created successfully');
     }
 
     /**
@@ -59,9 +61,11 @@ class ListingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Listing $listing)
     {
-        //
+        return inertia('Listing/Edit', [
+            'listing' => $listing
+        ]);
     }
 
     /**
@@ -71,9 +75,10 @@ class ListingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateListingRequest $request, Listing $listing)
     {
-        //
+        $listing->update($request->validated());
+        return to_route('listing.index')->with('success', 'Listing updated successfully');
     }
 
     /**
@@ -82,8 +87,9 @@ class ListingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Listing $listing)
     {
-        //
+        $listing->delete();
+        return to_route('listing.index')->with('success', 'Listing deleted successfully');
     }
 }
